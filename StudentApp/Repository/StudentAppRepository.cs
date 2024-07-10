@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using StudentApp.Data;
 using StudentApp.Interfaces;
 using StudentApp.Models.Entities;
@@ -12,14 +13,14 @@ namespace StudentApp.Repository
         {
             _context = context;
         }
-        public void AddStudent(Student student)
+        public async Task AddStudent(Student student)
         {
             _context.Student.Add(student);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public ICollection<Student> GetStudent()
+        public async Task<ICollection<Student>> GetStudent()
         {
-            return _context.Student.OrderBy(student=>student.Id).ToList();
+             return await _context.Student.ToListAsync();
         }
     }
 

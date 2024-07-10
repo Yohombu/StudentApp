@@ -22,7 +22,7 @@ namespace StudentApp.Controllers
             this.context  =  context;
         }
         [HttpPost("add")] // Example route to handle POST request to add a student
-        public IActionResult AddStudent([FromBody] Student model)
+        public async Task<ActionResult<ICollection<Student>>> AddStudent([FromBody] Student model)
         {
             if (!ModelState.IsValid)
             {
@@ -36,32 +36,36 @@ namespace StudentApp.Controllers
                 Name = model.Name,
                 Email = model.Email,
                 Course = model.Course,
-                Address = model.Address
+                Address = model.Address,
+                IdNumber = model.IdNumber,
             };
 
             // Add the student to the repository
-            _istudentAppRepository.AddStudent(newStudent);
+            await _istudentAppRepository.AddStudent(newStudent);
 
             // Return a success response or appropriate status code
             return Ok("Student added successfully");
         }
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Student>))]
-        public IActionResult GetStudent()
+        public async Task<ActionResult<ICollection<Student>>> GetStudent()
         {
-            var students = _istudentAppRepository.GetStudent();
-            if (!ModelState.IsValid)
+            var students = await _istudentAppRepository.GetStudent();
+
+            if (students == null || students.Count == 0)
             {
-                return BadRequest(ModelState);
+                return NotFound();
             }
+
             return Ok(students);
         }
+
     }
 
 
-   
 
 
 
-    
+
+
 }
