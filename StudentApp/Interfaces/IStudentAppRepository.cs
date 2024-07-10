@@ -5,7 +5,7 @@ namespace StudentApp.Interfaces
 {
     public interface IStudentAppRepository
     {
-        void AddStudent(Student newStudent);
-        ICollection<Student> GetStudent();
+        Task AddStudent(Student student);
+        Task<ICollection<Student>> GetStudent();
     }
 }
