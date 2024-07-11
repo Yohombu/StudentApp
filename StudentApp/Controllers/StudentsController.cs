@@ -60,13 +60,37 @@ namespace StudentApp.Controllers
 
             return Ok(students);
         }
+        [HttpPut("{Id}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ICollection<Student>>> UpdateStudent(int Id, [FromBody] Student updatedStudent)
+        {
+            if (updatedStudent == null)
+            {
+                return BadRequest(ModelState);
+            }
 
+            if (Id != updatedStudent.Id)
+            {
+                return BadRequest(ModelState);
+            }
+            var studentToUpdate = await _istudentAppRepository.GetStudentById(Id);
+
+            if (studentToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            studentToUpdate.Name = updatedStudent.Name;
+            studentToUpdate.Email = updatedStudent.Email;
+            studentToUpdate.Course = updatedStudent.Course;
+            studentToUpdate.Address = updatedStudent.Address;
+            studentToUpdate.IdNumber = updatedStudent.IdNumber;
+
+            await _istudentAppRepository.UpdateStudent(studentToUpdate);
+
+            return Ok("Student Updated successfully");
+        }
     }
-
-
-
-
-
-
-
 }
