@@ -60,6 +60,7 @@ namespace StudentApp.Controllers
 
             return Ok(students);
         }
+        
         [HttpDelete("{Id}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -67,17 +68,49 @@ namespace StudentApp.Controllers
         public async Task<ActionResult<ICollection<Student>>> DeleteStudent(int Id)
         {
             var studentToDelete = await _istudentAppRepository.GetStudentById(Id);
+            if (studentToDelete == null)
+            {
+                return NotFound("Student not found");
+            }
 
             await _istudentAppRepository.DeleteStudent(studentToDelete);
 
             return Ok("Student Deleted successfully");
         }
+
+        [HttpPut("{Id}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Student>))]
+        public async Task<ActionResult<ICollection<Student>>> UpdateStudent(int Id, [FromBody] Student updatedStudent)
+        {
+            if (updatedStudent == null)
+            {
+                return BadRequest("Updated student information cannot be null.");
+            }
+
+            if (Id != updatedStudent.Id)
+            {
+                return BadRequest("The ID does not match");
+            }
+            var studentToUpdate = await _istudentAppRepository.GetStudentById(Id);
+
+            if (studentToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            UpdateStudentProperties(studentToUpdate, updatedStudent);
+
+            await _istudentAppRepository.UpdateStudent(studentToUpdate);
+
+            return Ok("Student Updated successfully");
+        }
+        private void UpdateStudentProperties(Student studentToUpdate, Student updatedStudent)
+        {
+            studentToUpdate.Name = updatedStudent.Name;
+            studentToUpdate.Email = updatedStudent.Email;
+            studentToUpdate.Course = updatedStudent.Course;
+            studentToUpdate.Address = updatedStudent.Address;
+            studentToUpdate.IdNumber = updatedStudent.IdNumber;
+        }
     }
-
-
-
-
-
-
-
 }
