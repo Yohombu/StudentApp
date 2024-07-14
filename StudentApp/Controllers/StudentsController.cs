@@ -60,6 +60,24 @@ namespace StudentApp.Controllers
 
             return Ok(students);
         }
+        
+        [HttpDelete("{Id}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ICollection<Student>>> DeleteStudent(int Id)
+        {
+            var studentToDelete = await _istudentAppRepository.GetStudentById(Id);
+            if (studentToDelete == null)
+            {
+                return NotFound("Student not found");
+            }
+
+            await _istudentAppRepository.DeleteStudent(studentToDelete);
+
+            return Ok("Student Deleted successfully");
+        }
+
         [HttpPut("{Id}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Student>))]
         public async Task<ActionResult<ICollection<Student>>> UpdateStudent(int Id, [FromBody] Student updatedStudent)

@@ -27,6 +27,11 @@ namespace StudentApp.Repository
         {
             return await _context.Student.ToListAsync();
         }
+        public async Task DeleteStudent(Student student)
+        {
+            _context.Student.Remove(student);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task UpdateStudent(Student student)
         {
