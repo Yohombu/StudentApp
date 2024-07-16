@@ -36,6 +36,7 @@ namespace StudentApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdNumber")
@@ -48,7 +49,7 @@ namespace StudentApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Student");
+                    b.ToTable("Student", (string)null);
                 });
 #pragma warning restore 612, 618
         }
