@@ -19,4 +19,33 @@ namespace StudentApp.Models.Entities
         public string IdNumber { get; set; } = string.Empty;
 
     }
+    public class CreateStudentDto
+    {
+        [Required]//to make this property not nullable
+        public string? Name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string? Email { get; set; }
+        public string? Course { get; set; } = string.Empty;
+        public string? Address { get; set; }
+
+        [Required]
+        public string IdNumber { get; set; } = string.Empty;
+    }
+
+    public class UpdateStudentDto
+    {
+        [Required]//to make this property not nullable
+        public string? Name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string? Email { get; set; }
+        public string? Course { get; set; } = string.Empty;
+        public string? Address { get; set; }
+
+        [Required]
+        public string IdNumber { get; set; } = string.Empty;
+    }
 }

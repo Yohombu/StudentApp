@@ -23,7 +23,7 @@ namespace StudentApp.Controllers
             this.context = context;
         }
         [HttpPost("add")] // Example route to handle POST request to add a student
-        public async Task<ActionResult<ICollection<Student>>> AddStudent([FromBody] Student model)
+        public async Task<ActionResult<ICollection<Student>>> AddStudent([FromBody] CreateStudentDto model)
         {
             if (!ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace StudentApp.Controllers
 
         [HttpPut("{Id}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Student>))]
-        public async Task<ActionResult<ICollection<Student>>> UpdateStudent(int Id, [FromBody] Student updatedStudent)
+        public async Task<ActionResult> UpdateStudent(int Id, [FromBody] UpdateStudentDto updatedStudent)
         {
             if (updatedStudent == null)
             {
@@ -94,21 +94,19 @@ namespace StudentApp.Controllers
                 return BadRequest("Student not found");
             }
 
-            updatedStudent.Id = Id;
-
             UpdateStudentProperties(studentToUpdate, updatedStudent);
 
             await _istudentAppRepository.UpdateStudent(studentToUpdate);
 
-            return Ok("Student Updated successfully");
+            return Ok("Student updated successfully");
         }
-        private void UpdateStudentProperties(Student studentToUpdate, Student updatedStudent)
+
+        private void UpdateStudentProperties(Student studentToUpdate, UpdateStudentDto updatedStudent)
         {
-            studentToUpdate.Name = updatedStudent.Name;
-            studentToUpdate.Email = updatedStudent.Email;
-            studentToUpdate.Course = updatedStudent.Course;
-            studentToUpdate.Address = updatedStudent.Address;
-            studentToUpdate.IdNumber = updatedStudent.IdNumber;
+            studentToUpdate.Name = updatedStudent.Name ?? studentToUpdate.Name;
+            studentToUpdate.Email = updatedStudent.Email ?? studentToUpdate.Email;
+            studentToUpdate.Course = updatedStudent.Course ?? studentToUpdate.Course;
+            studentToUpdate.Address = updatedStudent.Address ?? studentToUpdate.Address;
         }
     }
 }
