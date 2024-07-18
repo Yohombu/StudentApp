@@ -60,7 +60,22 @@ namespace StudentApp.Controllers
 
             return Ok(students);
         }
-        
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(Student))]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<Student>> GetStudentById(int id)
+        {
+            var student = await _istudentAppRepository.GetStudentById(id);
+
+            if (student == null)
+            {
+                return NotFound("Student not found");
+            }
+
+            return Ok(student);
+        }
+
         [HttpDelete("{Id}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
