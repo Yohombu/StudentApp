@@ -11,6 +11,5 @@ namespace StudentApp.Interfaces
         Task<Student> GetStudentById(int id);
         Task DeleteStudent(Student student);
         Task UpdateStudent(Student student);
-        Task<ICollection<Student>> SearchStudents(StudentSearchModel searchModel);
     }
 }

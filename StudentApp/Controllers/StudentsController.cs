@@ -111,20 +111,5 @@ namespace StudentApp.Controllers
             studentToUpdate.IdNumber = updatedStudent.IdNumber;
         }
 
-        [HttpPost("search")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Student>))]
-        [ProducesResponseType(404)]
-        public async Task<ActionResult<ICollection<Student>>> SearchStudents([FromBody] StudentSearchModel searchModel)
-        {
-            var students = await _istudentAppRepository.SearchStudents(searchModel);
-
-            if (students == null || students.Count == 0)
-            {
-                return NotFound("No students found matching the search criteria.");
-            }
-
-            return Ok(students);
-        }
-
     }
 }

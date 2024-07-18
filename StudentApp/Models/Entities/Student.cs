@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,6 +17,7 @@ namespace StudentApp.Models.Entities
         public string? Email { get; set; }
         public string? Course { get; set; } = string.Empty;
         public string? Address { get; set; }
+
 
         [Required(ErrorMessage = "ID Number is required.")]
         [RegularExpression(@"^\d{10}V$|^\d{11}$", ErrorMessage = "ID Number must be 10 digits ending with 'V' or exactly 11 digits.")]

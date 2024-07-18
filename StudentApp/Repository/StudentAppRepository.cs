@@ -20,6 +20,12 @@ namespace StudentApp.Repository
         }
         public async Task AddStudent(Student student)
         {
+            var existingStudent = await _context.Student
+                .FirstOrDefaultAsync(s => s.IdNumber == student.IdNumber);
+            if (existingStudent != null)
+            {
+                throw new InvalidOperationException("A student with this ID Number already exists.");
+            }
             _context.Student.Add(student);
             await _context.SaveChangesAsync();
         }
@@ -37,34 +43,6 @@ namespace StudentApp.Repository
         {
             _context.Student.Update(student);
             await _context.SaveChangesAsync();
-        }
-
-        public async Task<ICollection<Student>> SearchStudents(StudentSearchModel searchModel)
-        {
-            var query = _context.Student.AsQueryable();
-
-            if (!string.IsNullOrEmpty(searchModel.Name))
-            {
-                query = query.Where(s => s.Name.Contains(searchModel.Name));
-            }
-            if (!string.IsNullOrEmpty(searchModel.Email))
-            {
-                query = query.Where(s => s.Email.Contains(searchModel.Email));
-            }
-            if (!string.IsNullOrEmpty(searchModel.Course))
-            {
-                query = query.Where(s => s.Course.Contains(searchModel.Course));
-            }
-            if (!string.IsNullOrEmpty(searchModel.Address))
-            {
-                query = query.Where(s => s.Address.Contains(searchModel.Address));
-            }
-            if (!string.IsNullOrEmpty(searchModel.IdNumber))
-            {
-                query = query.Where(s => s.IdNumber == searchModel.IdNumber);
-            }
-
-            return await query.ToListAsync();
         }
     }
 
