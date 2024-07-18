@@ -9,7 +9,9 @@ namespace StudentApp.Models.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         [Required(ErrorMessage = "Name is required.")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name must only contain letters and spaces.")]
         public string? Name { get; set; }
         
         [Required(ErrorMessage = "Email is required.")]
