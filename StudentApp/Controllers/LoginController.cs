@@ -5,8 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-
-namespace JWT_Token_Example.Controller
+namespace StudentApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -21,7 +20,7 @@ namespace JWT_Token_Example.Controller
         private Users AuthenticateUser(Users user)
         {
             Users _user = null;
-            if(user.Username == "admin" && user.Password == "1234")
+            if (user.Username == "admin" && user.Password == "1234")
             {
                 _user = new Users { Username = user.Username };
             }
@@ -39,7 +38,7 @@ namespace JWT_Token_Example.Controller
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        
+
         [HttpPost]
         public IActionResult Login([FromBody] Users user)
         {
