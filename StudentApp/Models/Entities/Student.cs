@@ -13,7 +13,7 @@ namespace StudentApp.Models.Entities
         [EmailAddress]
         public string? Email { get; set; }
         public string? Course { get; set; } = string.Empty;
-        public string? Address { get; set; }
+        public string? Address { get; set; } = string.Empty;
 
         [Required]
         public string IdNumber { get; set; } = string.Empty;
@@ -28,7 +28,7 @@ namespace StudentApp.Models.Entities
         [EmailAddress]
         public string? Email { get; set; }
         public string? Course { get; set; } = string.Empty;
-        public string? Address { get; set; }
+        public string? Address { get; set; } = string.Empty;
 
         [Required]
         public string IdNumber { get; set; } = string.Empty;
@@ -43,7 +43,7 @@ namespace StudentApp.Models.Entities
         [EmailAddress]
         public string? Email { get; set; }
         public string? Course { get; set; } = string.Empty;
-        public string? Address { get; set; }
+        public string? Address { get; set; } = string.Empty;
 
         [Required]
         public string IdNumber { get; set; } = string.Empty;
