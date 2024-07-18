@@ -122,6 +122,7 @@ namespace StudentApp.Controllers
             studentToUpdate.Email = updatedStudent.Email ?? studentToUpdate.Email;
             studentToUpdate.Course = updatedStudent.Course ?? studentToUpdate.Course;
             studentToUpdate.Address = updatedStudent.Address ?? studentToUpdate.Address;
+            studentToUpdate.IdNumber = updatedStudent.IdNumber ?? studentToUpdate.IdNumber;
         }
     }
 }
