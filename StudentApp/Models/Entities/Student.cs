@@ -7,6 +7,7 @@ namespace StudentApp.Models.Entities
         [Key]//to assign Id as the primary key
         public int Id { get; set; }
         [Required(ErrorMessage = "Need to fill Required fields")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name must only contain letters and spaces.")]
         public string? Name { get; set; }
 
         [Required(ErrorMessage = "Need to fill Required fields")]
@@ -23,6 +24,7 @@ namespace StudentApp.Models.Entities
     public class CreateStudentDto
     {
         [Required(ErrorMessage = "Need to fill Required fields")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name must only contain letters and spaces.")]
         public string? Name { get; set; }
 
         [Required(ErrorMessage = "Need to fill Required fields")]
@@ -39,6 +41,7 @@ namespace StudentApp.Models.Entities
     public class UpdateStudentDto
     {
         [Required(ErrorMessage = "Need to fill Required fields")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name must only contain letters and spaces.")]
         public string? Name { get; set; }
 
         [Required(ErrorMessage = "Need to fill Required fields")]
