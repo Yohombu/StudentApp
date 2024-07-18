@@ -84,14 +84,14 @@ namespace StudentApp.Controllers
         {
             if (updatedStudent == null)
             {
-                return BadRequest("Updated student information cannot be null.");
+                return BadRequest("Empty request");
             }
 
             var studentToUpdate = await _istudentAppRepository.GetStudentById(Id);
 
             if (studentToUpdate == null)
             {
-                return BadRequest("Student not found");
+                return NotFound("Student not found");
             }
 
             UpdateStudentProperties(studentToUpdate, updatedStudent);

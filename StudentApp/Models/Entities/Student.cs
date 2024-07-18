@@ -6,46 +6,49 @@ namespace StudentApp.Models.Entities
     {
         [Key]//to assign Id as the primary key
         public int Id { get; set; }
-        [Required]//to make this property not nullable
+        [Required(ErrorMessage = "Need to fill Required fields")]
         public string? Name { get; set; }
-        
-        [Required]
-        [EmailAddress]
+
+        [Required(ErrorMessage = "Need to fill Required fields")]
+        [EmailAddress(ErrorMessage = "The Email field is not a valid e-mail address")]
         public string? Email { get; set; }
         public string? Course { get; set; } = string.Empty;
         public string? Address { get; set; } = string.Empty;
 
-        [Required]
+        [Required(ErrorMessage = "Need to fill Required fields")]
+        [RegularExpression(@"^\d{9}V$|^\d{12}$", ErrorMessage = "ID Number must be 9 digits ending with 'V' or 12 digits.")]
         public string IdNumber { get; set; } = string.Empty;
 
     }
     public class CreateStudentDto
     {
-        [Required]//to make this property not nullable
+        [Required(ErrorMessage = "Need to fill Required fields")]
         public string? Name { get; set; }
 
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Need to fill Required fields")]
+        [EmailAddress(ErrorMessage = "The Email field is not a valid e-mail address")]
         public string? Email { get; set; }
         public string? Course { get; set; } = string.Empty;
         public string? Address { get; set; } = string.Empty;
 
-        [Required]
+        [Required(ErrorMessage = "Need to fill Required fields")]
+        [RegularExpression(@"^\d{9}V$|^\d{12}$", ErrorMessage = "ID Number must be 9 digits ending with 'V' or 12 digits.")]
         public string IdNumber { get; set; } = string.Empty;
     }
 
     public class UpdateStudentDto
     {
-        [Required]//to make this property not nullable
+        [Required(ErrorMessage = "Need to fill Required fields")]
         public string? Name { get; set; }
 
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Need to fill Required fields")]
+        [EmailAddress(ErrorMessage = "The Email field is not a valid e-mail address")]
         public string? Email { get; set; }
         public string? Course { get; set; } = string.Empty;
         public string? Address { get; set; } = string.Empty;
 
-        [Required]
+        [Required(ErrorMessage = "Need to fill Required fields")]
+        [RegularExpression(@"^\d{9}V$|^\d{12}$", ErrorMessage = "ID Number must be 9 digits ending with 'V' or 12 digits.")]
         public string IdNumber { get; set; } = string.Empty;
     }
 }
