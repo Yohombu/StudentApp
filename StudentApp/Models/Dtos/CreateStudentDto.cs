@@ -1,16 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-using StudentApp.Validation;
+﻿using StudentApp.Validation;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StudentApp.Models.Entities
+namespace StudentApp.Models.Dtos
 {
-    public class Student
+    public class CreateStudentDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Required(ErrorMessage = "Need to fill Required fields")]
         [ValidName(ErrorMessage = "Name must only contain letters and spaces.")]
         public string? Name { get; set; }
@@ -26,5 +20,4 @@ namespace StudentApp.Models.Entities
         [ValidIdNumber(ErrorMessage = "ID Number must be 9 digits ending with 'V' or 12 digits.")]
         public string IdNumber { get; set; } = string.Empty;
     }
-
 }
