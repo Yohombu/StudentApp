@@ -1,10 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentApp.Models.Entities
 {
     public class Student
     {
-        [Key]//to assign Id as the primary key
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required(ErrorMessage = "Need to fill Required fields")]
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name must only contain letters and spaces.")]

@@ -124,5 +124,6 @@ namespace StudentApp.Controllers
             studentToUpdate.Address = updatedStudent.Address ?? studentToUpdate.Address;
             studentToUpdate.IdNumber = updatedStudent.IdNumber ?? studentToUpdate.IdNumber;
         }
+
     }
 }

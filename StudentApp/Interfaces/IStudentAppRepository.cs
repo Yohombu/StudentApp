@@ -1,5 +1,6 @@
 using StudentApp.Models;
 using StudentApp.Models.Entities;
+using StudentApp.Repository;
 
 namespace StudentApp.Interfaces
 {
