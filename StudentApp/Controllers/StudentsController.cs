@@ -166,8 +166,8 @@ namespace StudentApp.Controllers
         {
             studentToUpdate.Name = updatedStudent.Name ?? studentToUpdate.Name;
             studentToUpdate.Email = updatedStudent.Email ?? studentToUpdate.Email;
-            studentToUpdate.Course = updatedStudent.Course ?? studentToUpdate.Course;
-            studentToUpdate.Address = updatedStudent.Address ?? studentToUpdate.Address;
+            studentToUpdate.Course = !string.IsNullOrEmpty(updatedStudent.Course) ? updatedStudent.Course : studentToUpdate.Course;
+            studentToUpdate.Address = !string.IsNullOrEmpty(updatedStudent.Address) ? updatedStudent.Address : studentToUpdate.Address;
             studentToUpdate.IdNumber = updatedStudent.IdNumber ?? studentToUpdate.IdNumber;
         }
 
