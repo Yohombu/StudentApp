@@ -4,6 +4,7 @@ using StudentApp.Interfaces;
 using StudentApp.Models.Entities;
 using StudentApp.Models.Dtos;
 using StudentApp.Repository;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,6 +34,19 @@ namespace StudentApp.Controllers
 
             // Assuming StudentInputModel is a class that represents incoming data
             // Here you create a Student object based on incoming data
+            var existingStudent = await context.Student
+                .FirstOrDefaultAsync(s => s.IdNumber == model.IdNumber || s.Email == model.Email);
+
+            if (existingStudent != null)
+            {
+                var errorResponse = new
+                {
+                    StatusCode = 403,
+                    Message = "A student with this ID Number or Email already exists."
+                };
+                return new ObjectResult(errorResponse) { StatusCode = 403 };
+            }
+
             Student newStudent = new Student
             {
                 Name = model.Name,
