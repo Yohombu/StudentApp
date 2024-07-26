@@ -32,21 +32,52 @@ namespace StudentApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Assuming StudentInputModel is a class that represents incoming data
-            // Here you create a Student object based on incoming data
             var existingStudent = await context.Student
-                .FirstOrDefaultAsync(s => s.IdNumber == model.IdNumber || s.Email == model.Email);
+            .FirstOrDefaultAsync(s => s.IdNumber == model.IdNumber && s.Email == model.Email);
 
             if (existingStudent != null)
             {
                 var errorResponse = new
                 {
                     StatusCode = 403,
-                    Message = "A student with this ID Number or Email already exists."
+                    Message = "A student with this ID Number and Email already exists."
                 };
                 return new ObjectResult(errorResponse) { StatusCode = 403 };
             }
 
+
+            // Check for existing student by ID number
+            var existingStudentById = await context.Student
+                .FirstOrDefaultAsync(s => s.IdNumber == model.IdNumber);
+
+            if (existingStudentById != null)
+            {
+                var errorResponse = new
+                {
+                    StatusCode = 403,
+                    Message = "A student with this ID Number already exists."
+                };
+                return new ObjectResult(errorResponse) { StatusCode = 403 };
+            }
+
+            // Check for existing student by Email
+            var existingStudentByEmail = await context.Student
+                .FirstOrDefaultAsync(s => s.Email == model.Email);
+
+            if (existingStudentByEmail != null)
+            {
+                var errorResponse = new
+                {
+                    StatusCode = 403,
+                    Message = "A student with this Email already exists."
+                };
+                return new ObjectResult(errorResponse) { StatusCode = 403 };
+            }
+
+            
+
+            // Assuming StudentInputModel is a class that represents incoming data
+            // Here you create a Student object based on incoming data
             Student newStudent = new Student
             {
                 Name = model.Name,
