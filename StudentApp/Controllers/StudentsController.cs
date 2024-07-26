@@ -29,7 +29,7 @@ namespace StudentApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest("Need to fill required fields");
             }
 
             var existingStudent = await context.Student

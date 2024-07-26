@@ -13,6 +13,7 @@ namespace StudentApp.Models.Dtos
         [CustomEmail(ErrorMessage = "The Email field is not a valid e-mail address.")]
         public string? Email { get; set; }
 
+        [ValidCourse(ErrorMessage = "Invalid course")]
         public string? Course { get; set; } = string.Empty;
         public string? Address { get; set; } = string.Empty;
 
