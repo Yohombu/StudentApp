@@ -32,49 +32,68 @@ namespace StudentApp.Controllers
                 return BadRequest("Need to fill required fields");
             }
 
-            var existingStudent = await context.Student
-            .FirstOrDefaultAsync(s => s.IdNumber == model.IdNumber && s.Email == model.Email);
+            // Check if a student with the same ID number, email, name, and course already exists
+            var existingStudent1 = await context.Student
+                .FirstOrDefaultAsync(s => s.IdNumber == model.IdNumber && s.Email == model.Email && s.Name == model.Name && s.Course == model.Course);
 
-            if (existingStudent != null)
+            if (existingStudent1 != null)
             {
                 var errorResponse = new
                 {
                     StatusCode = 403,
-                    Message = "A student with this ID Number and Email already exists."
+                    Message = "This student has already registered"
                 };
                 return new ObjectResult(errorResponse) { StatusCode = 403 };
             }
 
+            // Check if a student with the same ID number, email, and name exists
+            var existingStudent2 = await context.Student
+                .FirstOrDefaultAsync(s => s.IdNumber == model.IdNumber && s.Email == model.Email && s.Name == model.Name);
 
-            // Check for existing student by ID number
-            var existingStudentById = await context.Student
-                .FirstOrDefaultAsync(s => s.IdNumber == model.IdNumber);
-
-            if (existingStudentById != null)
+            if (existingStudent2 == null)
             {
-                var errorResponse = new
+                // Proceed to further checks only if existingStudent2 is null
+                var existingStudent = await context.Student
+                    .FirstOrDefaultAsync(s => s.IdNumber == model.IdNumber && s.Email == model.Email);
+
+                if (existingStudent != null)
                 {
-                    StatusCode = 403,
-                    Message = "A student with this ID Number already exists."
-                };
-                return new ObjectResult(errorResponse) { StatusCode = 403 };
+                    var errorResponse = new
+                    {
+                        StatusCode = 403,
+                        Message = "A student with this ID Number and Email already exists."
+                    };
+                    return new ObjectResult(errorResponse) { StatusCode = 403 };
+                }
+
+                var existingStudentById = await context.Student
+                    .FirstOrDefaultAsync(s => s.IdNumber == model.IdNumber);
+
+                if (existingStudentById != null)
+                {
+                    var errorResponse = new
+                    {
+                        StatusCode = 403,
+                        Message = "This ID has already registered"
+                    };
+                    return new ObjectResult(errorResponse) { StatusCode = 403 };
+                }
+
+                var existingStudentByEmail = await context.Student
+                    .FirstOrDefaultAsync(s => s.Email == model.Email);
+
+                if (existingStudentByEmail != null)
+                {
+                    var errorResponse = new
+                    {
+                        StatusCode = 403,
+                        Message = "This Email has already registered"
+                    };
+                    return new ObjectResult(errorResponse) { StatusCode = 403 };
+                }
             }
 
-            // Check for existing student by Email
-            var existingStudentByEmail = await context.Student
-                .FirstOrDefaultAsync(s => s.Email == model.Email);
 
-            if (existingStudentByEmail != null)
-            {
-                var errorResponse = new
-                {
-                    StatusCode = 403,
-                    Message = "A student with this Email already exists."
-                };
-                return new ObjectResult(errorResponse) { StatusCode = 403 };
-            }
-
-            
 
             // Assuming StudentInputModel is a class that represents incoming data
             // Here you create a Student object based on incoming data

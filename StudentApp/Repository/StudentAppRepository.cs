@@ -20,12 +20,6 @@ namespace StudentApp.Repository
         }
         public async Task AddStudent(Student student)
         {
-            var existingStudent = await _context.Student
-                .FirstOrDefaultAsync(s => s.IdNumber == student.IdNumber);
-            if (existingStudent != null)
-            {
-                throw new InvalidOperationException("A student with this ID Number already exists.");
-            }
             _context.Student.Add(student);
             await _context.SaveChangesAsync();
         }
