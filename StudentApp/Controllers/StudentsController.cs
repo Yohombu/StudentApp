@@ -11,13 +11,13 @@ namespace StudentApp.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private readonly IStudentAppRepository _isStudentAppRepository;
+        private readonly IStudentAppRepository _studentAppRepository;
         private readonly ApplicationDbContext context;
 
 
         public StudentsController(IStudentAppRepository studentAppRepository, ApplicationDbContext context)
         {
-            _isStudentAppRepository = studentAppRepository;
+            _studentAppRepository = studentAppRepository;
             this.context = context;
         }
         [HttpPost("add")] 
@@ -37,7 +37,7 @@ namespace StudentApp.Controllers
                 IdNumber = model.IdNumber,
             };
 
-            await _isStudentAppRepository.AddStudent(newStudent);
+            await _studentAppRepository.AddStudent(newStudent);
 
             return Ok("Student added successfully");
         }
@@ -45,7 +45,7 @@ namespace StudentApp.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Student>))]
         public async Task<ActionResult<ICollection<Student>>> GetStudent()
         {
-            var students = await _isStudentAppRepository.GetStudent();
+            var students = await _studentAppRepository.GetStudent();
 
             if (students == null || students.Count == 0)
             {
@@ -61,13 +61,13 @@ namespace StudentApp.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<ICollection<Student>>> DeleteStudent(int Id)
         {
-            var studentToDelete = await _isStudentAppRepository.GetStudentById(Id);
+            var studentToDelete = await _studentAppRepository.GetStudentById(Id);
             if (studentToDelete == null)
             {
                 return NotFound("Student not found");
             }
 
-            await _isStudentAppRepository.DeleteStudent(studentToDelete);
+            await _studentAppRepository.DeleteStudent(studentToDelete);
 
             return Ok("Student Deleted successfully");
         }
@@ -81,7 +81,7 @@ namespace StudentApp.Controllers
                 return BadRequest("Updated student information cannot be null.");
             }
 
-            var studentToUpdate = await _isStudentAppRepository.GetStudentById(Id);
+            var studentToUpdate = await _studentAppRepository.GetStudentById(Id);
 
             if (studentToUpdate == null)
             {
@@ -92,7 +92,7 @@ namespace StudentApp.Controllers
 
             UpdateStudentProperties(studentToUpdate, updatedStudent);
 
-            await _isStudentAppRepository.UpdateStudent(studentToUpdate);
+            await _studentAppRepository.UpdateStudent(studentToUpdate);
 
             return Ok("Student Updated successfully");
         }
