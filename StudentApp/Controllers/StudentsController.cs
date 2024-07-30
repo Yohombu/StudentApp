@@ -6,7 +6,6 @@ using StudentApp.Models.Dtos;
 using StudentApp.Repository;
 using Microsoft.EntityFrameworkCore;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace StudentApp.Controllers
 {
@@ -14,14 +13,13 @@ namespace StudentApp.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private readonly IStudentAppRepository _istudentAppRepository;
+        private readonly IStudentAppRepository _studentAppRepository;
         private readonly ApplicationDbContext context;
 
 
-        // GET: api/<StudentsController>
         public StudentsController(IStudentAppRepository studentAppRepository, ApplicationDbContext context)
         {
-            _istudentAppRepository = studentAppRepository;
+            _studentAppRepository = studentAppRepository;
             this.context = context;
         }
         [HttpPost("add")] // Example route to handle POST request to add a student
@@ -106,17 +104,15 @@ namespace StudentApp.Controllers
                 IdNumber = model.IdNumber,
             };
 
-            // Add the student to the repository
-            await _istudentAppRepository.AddStudent(newStudent);
+            await _studentAppRepository.AddStudent(newStudent);
 
-            // Return a success response or appropriate status code
             return Ok("Student added successfully");
         }
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Student>))]
         public async Task<ActionResult<ICollection<Student>>> GetStudent()
         {
-            var students = await _istudentAppRepository.GetStudent();
+            var students = await _studentAppRepository.GetStudent();
 
             if (students == null || students.Count == 0)
             {
@@ -131,7 +127,7 @@ namespace StudentApp.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Student>> GetStudentById(int id)
         {
-            var student = await _istudentAppRepository.GetStudentById(id);
+            var student = await _studentAppRepository.GetStudentById(id);
 
             if (student == null)
             {
@@ -147,13 +143,13 @@ namespace StudentApp.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<ICollection<Student>>> DeleteStudent(int Id)
         {
-            var studentToDelete = await _istudentAppRepository.GetStudentById(Id);
+            var studentToDelete = await _studentAppRepository.GetStudentById(Id);
             if (studentToDelete == null)
             {
                 return NotFound("Student not found");
             }
 
-            await _istudentAppRepository.DeleteStudent(studentToDelete);
+            await _studentAppRepository.DeleteStudent(studentToDelete);
 
             return Ok("Student Deleted successfully");
         }
@@ -167,7 +163,7 @@ namespace StudentApp.Controllers
                 return BadRequest("Empty request");
             }
 
-            var studentToUpdate = await _istudentAppRepository.GetStudentById(Id);
+            var studentToUpdate = await _studentAppRepository.GetStudentById(Id);
 
             if (studentToUpdate == null)
             {
@@ -176,7 +172,7 @@ namespace StudentApp.Controllers
 
             UpdateStudentProperties(studentToUpdate, updatedStudent);
 
-            await _istudentAppRepository.UpdateStudent(studentToUpdate);
+            await _studentAppRepository.UpdateStudent(studentToUpdate);
 
             return Ok("Student updated successfully");
         }
