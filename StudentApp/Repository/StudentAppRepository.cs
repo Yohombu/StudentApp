@@ -18,20 +18,24 @@ namespace StudentApp.Repository
         {
             return await _context.Student.FindAsync(id);
         }
+
         public async Task AddStudent(Student student)
         {
             _context.Student.Add(student);
             await _context.SaveChangesAsync();
         }
+
         public async Task<ICollection<Student>> GetStudent()
         {
             return await _context.Student.ToListAsync();
         }
+
         public async Task DeleteStudent(Student student)
         {
             _context.Student.Remove(student);
             await _context.SaveChangesAsync();
         }
+
 
         public async Task UpdateStudent(Student student)
         {
