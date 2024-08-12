@@ -31,10 +31,10 @@ namespace StudentApp.Controllers
             }
 
             // Check if a student with the same ID number, email, name, and course already exists
-            var existingStudent1 = await context.Student
+            var existingStudentBySameDetails = await context.Student
                 .FirstOrDefaultAsync(s => s.IdNumber == model.IdNumber && s.Email == model.Email && s.Name == model.Name && s.Course == model.Course);
 
-            if (existingStudent1 != null)
+            if (existingStudentBySameDetails != null)
             {
                 var errorResponse = new
                 {
@@ -45,16 +45,16 @@ namespace StudentApp.Controllers
             }
 
             // Check if a student with the same ID number, email, and name exists
-            var existingStudent2 = await context.Student
+            var existingStudentByIdEmailName = await context.Student
                 .FirstOrDefaultAsync(s => s.IdNumber == model.IdNumber && s.Email == model.Email && s.Name == model.Name);
 
-            if (existingStudent2 == null)
+            if (existingStudentByIdEmailName == null)
             {
-                // Proceed to further checks only if existingStudent2 is null
-                var existingStudent = await context.Student
+                // Proceed to further checks only if existingStudentByIdEmailName is null
+                var existingStudentByIdEmail = await context.Student
                     .FirstOrDefaultAsync(s => s.IdNumber == model.IdNumber && s.Email == model.Email);
 
-                if (existingStudent != null)
+                if (existingStudentByIdEmail != null)
                 {
                     var errorResponse = new
                     {
